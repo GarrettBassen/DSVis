@@ -1,0 +1,7 @@
+libraries
+Debug
+Release
+.vs
+x64
+*ini
+*.dll
