@@ -5,7 +5,10 @@ ImGuiWindowFlags GUI::mMainFlags = ImGuiWindowFlags_None;
 bool GUI::mIsInitialized = false;
 sf::Clock GUI::mClock;
 
-GUI::GUI(sf::RenderWindow& window) {
+GUI::GUI(sf::RenderWindow& window)
+	: spawnCircle(false)
+	, spawnData(0.f)
+{
 	if (!mIsInitialized) {
 		ImGui::SFML::Init(window);
 		InitStyle();
@@ -29,7 +32,7 @@ void GUI::Render(sf::RenderWindow& window) {
 	ImGui::ShowDemoWindow();
 	MainMenu();
 
-	ImGui::SFML::Render(window);
+	//ImGui::SFML::Render(window);
 }
 
 
@@ -54,7 +57,8 @@ void GUI::MainMenu() {
 	ImGui::EndMenuBar();
 
 	if (ImGui::Button("Add Node", ImVec2(100.f, 19.f))) {
-		// TODO CALL NODE CONSTRUCTOR
+		spawnCircle = true;
+		spawnData = atof(mDataStr);
 	}
 	ImGui::SameLine();
 	ImGui::PushItemWidth(140.f);

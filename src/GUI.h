@@ -10,6 +10,9 @@ private:
 	static bool mIsInitialized;
 	static sf::Clock mClock;
 	char mDataStr[32] = "";
+public:
+	bool spawnCircle;
+	float spawnData;
 
 public:
 	GUI(sf::RenderWindow& window);
