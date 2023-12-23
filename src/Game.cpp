@@ -33,8 +33,11 @@ void Game::AddNode(const std::string& data) {
 }
 
 void Game::PopNode() {
-	if (!stack.empty())
+	if (!stack.empty()) {
 		stack.pop_back();
+		if (!stack.empty()) mGUI.spawnData = stack.at(stack.size() - 1).string;
+		else mGUI.spawnData = "NULL";
+	}
 	mGUI.pop = false;
 }
 
@@ -87,7 +90,7 @@ void Game::Render() {
 
 	for (Stack s : stack) {
 		mText.setString(s.string);
-		mText.setPosition(s.rect.getPosition().x - (s.string.length() * mText.getCharacterSize()) / 4.f, s.rect.getPosition().y - mText.getCharacterSize() / 2.f);
+		mText.setPosition(s.rect.getPosition().x - (s.string.size() * mText.getCharacterSize()) / 4.f, s.rect.getPosition().y - mText.getCharacterSize() / 2.f);
 		mWindow.draw(s.rect);
 		mWindow.draw(mText);
 	}

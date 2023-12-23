@@ -28,5 +28,4 @@ private:
 	void InitStyle();
 	void MainMenu();
 	void AboutBar();
-	void MenuBar();
 };
