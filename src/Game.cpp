@@ -1,6 +1,4 @@
 #include "Game.h"
-#include <iomanip>
-#include <sstream>
 
 Game::Game()
 	: mWindow(sf::VideoMode(1500, 900), "DSV | Data Structure Visualization Tool | By: Garrett Bassen", sf::Style::Default, sf::ContextSettings(0, 0, 8))
@@ -15,6 +13,7 @@ Game::Game()
 	image.loadFromFile("assets/icon.png");
 	mWindow.setIcon(image.getSize().x, image.getSize().y, image.getPixelsPtr());
 	mFont.loadFromFile("assets/Roboto-Regular.ttf");
+	mFont.setSmooth(true);
 	mText.setFillColor(sf::Color::Black);
 	mText.setFont(mFont);
 	mText.setCharacterSize(18.f);
@@ -28,40 +27,38 @@ void Game::Run() {
 	}
 }
 
-void Game::AddNode(const float data) {
+void Game::AddNode(const std::string& data) {
 	mGUI.spawnCircle = false;
-	mNodes.push_back(Node(data, sf::Vector2f(rand() / 1000.f, rand()/1000.f)));
+	stack.push_back(Stack(sf::RectangleShape(sf::Vector2f(100.f, 70.f)), sf::Vector2f(0.f, (stack.size() * -70.f - stack.size())), data));
 }
 
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * *//
-// * * * * * * * * * * * * PRIVATE * * * * * * * * * * * *//
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * *//
+void Game::PopNode() {
+	if (!stack.empty())
+		stack.pop_back();
+	mGUI.pop = false;
+}
 
 void Game::ProcessEvents() {
 	while (mWindow.pollEvent(mEvent)) {
 		mGUI.ProcessEvents(mEvent);
 		
-		if (mEvent.type == sf::Event::Closed)
+		switch (mEvent.type) {
+		case sf::Event::Closed:
 			mWindow.close();
-
-		if (mEvent.type == sf::Event::Resized)
+			break;
+		case sf::Event::Resized:
 			mView.setSize(mEvent.size.width, mEvent.size.height);
-
-		if (mEvent.type == sf::Event::MouseButtonPressed) {
-			if (mEvent.mouseButton.button == sf::Mouse::Right) {
-				mMousePos = sf::Mouse::getPosition();
-				mIsDragging = true;
-			}
-		}
-
-		if (mEvent.type == sf::Event::MouseButtonReleased) {
+			break;
+		case sf::Event::MouseButtonPressed:
+			mIsDragging = mEvent.mouseButton.button == sf::Mouse::Right;
+			mMousePos = sf::Mouse::getPosition();
+			break;
+		case sf::Event::MouseButtonReleased:
 			mIsDragging = false;
-		}
-
-		if (mEvent.type == sf::Event::MouseWheelScrolled) {
-			float offset = -mEvent.mouseWheelScroll.delta / 20.f;
-			mZoom += offset;
-			mView.zoom(1 + offset);
+			break;
+		case sf::Event::MouseWheelScrolled:
+			mView.zoom(1 + -mEvent.mouseWheelScroll.delta / 20.f);
+			break;
 		}
 	}
 
@@ -69,47 +66,30 @@ void Game::ProcessEvents() {
 
 void Game::Update() {
 	mWindow.setView(mView);
-	
-	if (mGUI.spawnCircle) {
-		AddNode(mGUI.spawnData);
-	}
-
 	mGUI.Update(mWindow);
+	
+	if (mGUI.spawnCircle)
+		AddNode(mGUI.spawnData);
+	if (mGUI.pop)
+		PopNode();
 
 	if (mClock.getElapsedTime().asSeconds() >= 1.f / 60.f) {
 		mClock.restart();
 		if (mIsDragging) {
-			float dt = mClock.restart().asSeconds();
-			mView.move(-(sf::Mouse::getPosition().x - mMousePos.x) * mZoom, -(sf::Mouse::getPosition().y - mMousePos.y) * mZoom);
+			mView.move(-(sf::Mouse::getPosition().x - mMousePos.x), -(sf::Mouse::getPosition().y - mMousePos.y));
 			mMousePos = sf::Mouse::getPosition();
 		}
 	}
 }
 
 void Game::Render() {
-	ImGuiWindowFlags NodeFlags;
-	NodeFlags = ImGuiWindowFlags_None;
-	NodeFlags |= ImGuiWindowFlags_NoBackground;
-	NodeFlags |= ImGuiWindowFlags_NoTitleBar;
-	NodeFlags |= ImGuiWindowFlags_NoResize;
-	NodeFlags |= ImGuiWindowFlags_NoMove;
-
 	mWindow.clear(sf::Color(185, 172, 154, 240));
 
-	ImGui::Begin("DEBUG");
-	ImGui::Text("Zoom: %f", mZoom);
-	ImGui::End();
-
-	for (Node n : mNodes) {
-		std::stringstream stream;
-		stream << std::fixed << std::setprecision(2) << n.data;
-		mText.setString(stream.str());
-		mText.setPosition(sf::Vector2f(n.circle.getPosition().x - (stream.str().length() - 1) / 2 * mText.getCharacterSize(), n.circle.getPosition().y));
-		mWindow.draw(n.circle);
+	for (Stack s : stack) {
+		mText.setString(s.string);
+		mText.setPosition(s.rect.getPosition().x - (s.string.length() * mText.getCharacterSize()) / 4.f, s.rect.getPosition().y - mText.getCharacterSize() / 2.f);
+		mWindow.draw(s.rect);
 		mWindow.draw(mText);
-		ImGui::Begin("TESTESTSETSETSET");
-		ImGui::Text("%s", mText.getString());
-		ImGui::End();
 	}
 
 	mGUI.Render(mWindow);

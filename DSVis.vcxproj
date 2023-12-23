@@ -269,6 +269,7 @@
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GUI.h" />
     <ClInclude Include="src\Node.h" />
+    <ClInclude Include="src\Stack.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\icon.png" />

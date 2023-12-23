@@ -9,10 +9,13 @@ private:
 	static ImGuiWindowFlags mMainFlags;
 	static bool mIsInitialized;
 	static sf::Clock mClock;
-	char mDataStr[32] = "";
+	char mDataStr[10] = "";
 public:
 	bool spawnCircle;
-	float spawnData;
+	bool pop;
+	std::string spawnData;
+	float xPos;
+	float yPos;
 
 public:
 	GUI(sf::RenderWindow& window);

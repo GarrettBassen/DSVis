@@ -383,6 +383,9 @@
     <ClInclude Include="src\Node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Stack.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\icon.png">

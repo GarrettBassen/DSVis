@@ -1,4 +1,6 @@
 #include "GUI.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 ImGuiWindowFlags GUI::mNodeFlags = ImGuiWindowFlags_None;
 ImGuiWindowFlags GUI::mMainFlags = ImGuiWindowFlags_None;
@@ -7,7 +9,10 @@ sf::Clock GUI::mClock;
 
 GUI::GUI(sf::RenderWindow& window)
 	: spawnCircle(false)
-	, spawnData(0.f)
+	, pop(false)
+	, spawnData("")
+	, xPos(0)
+	, yPos(0)
 {
 	if (!mIsInitialized) {
 		ImGui::SFML::Init(window);
@@ -29,18 +34,12 @@ void GUI::Update(sf::RenderWindow& window) {
 }
 
 void GUI::Render(sf::RenderWindow& window) {
-	ImGui::ShowDemoWindow();
+	//ImGui::ShowDemoWindow();
 	MainMenu();
-
-	//ImGui::SFML::Render(window);
 }
 
-
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * *//
-// * * * * * * * * * * * * PRIVATE * * * * * * * * * * * *//
-// * * * * * * * * * * * * * * * * * * * * * * * * * * * *//
-
 void GUI::MainMenu() {
+	ImGui::SetNextWindowSize(ImVec2(265.f, 122.f));
 	ImGui::Begin("Control Panel", NULL, mMainFlags);
 
 	ImGui::BeginMenuBar();
@@ -56,16 +55,35 @@ void GUI::MainMenu() {
 	}
 	ImGui::EndMenuBar();
 
-	if (ImGui::Button("Add Node", ImVec2(100.f, 19.f))) {
+	if (ImGui::Button("Add Node", ImVec2(120.f, 25.f))) {
 		spawnCircle = true;
-		spawnData = atof(mDataStr);
+		spawnData = mDataStr;
 	}
 	ImGui::SameLine();
-	ImGui::PushItemWidth(140.f);
-	ImGui::InputTextWithHint(" ", "Node Data", mDataStr, sizeof(mDataStr), ImGuiInputTextFlags_CharsDecimal);
+	ImGui::PushItemWidth(120.f);
+	ImGui::InputTextWithHint(" ", "Node Data", mDataStr, sizeof(mDataStr));
 	ImGui::PopItemWidth();
 
-	ImGui::Text("Number: %s", mDataStr);
+	if (ImGui::Button("Pop", ImVec2(120.f, 25.f))) {
+		pop = true;
+	}
+
+	ImGui::SameLine();
+	if (ImGui::Button("Peek", ImVec2(120.f, 25.f)))
+		ImGui::OpenPopup("Peek Info");
+
+	// Always center this window when appearing
+	ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+	ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+
+	if (ImGui::BeginPopupModal("Peek Info", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+	{
+		ImGui::Text("The top of the stack is %s", mDataStr);
+		ImGui::Separator();
+
+		if (ImGui::Button("OK", ImVec2(190, 0))) { ImGui::CloseCurrentPopup(); }
+		ImGui::EndPopup();
+	}
 
 	ImGui::End();
 }
@@ -150,12 +168,15 @@ void GUI::InitStyle() {
 	mNodeFlags |= ImGuiWindowFlags_NoMove;
 
 	ImGuiStyle& mStyle = ImGui::GetStyle();
+	mStyle.ScaleAllSizes(2.f);
 	mStyle.WindowRounding = 3;
 	mStyle.FrameRounding = 1;
 	mStyle.WindowTitleAlign = ImVec2(.5f, .5f);
 	mStyle.SeparatorTextBorderSize = 4;
 	mStyle.SeparatorTextPadding = ImVec2(15, 0);
 	mStyle.FrameBorderSize = 1;
+	mStyle.WindowPadding = ImVec2(8.f, 8.f);
+	mStyle.ItemSpacing = ImVec2(8.f, 6.f);
 
 	ImVec4* mColors = ImGui::GetStyle().Colors;
 	mColors = ImGui::GetStyle().Colors;
