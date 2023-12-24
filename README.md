@@ -2,6 +2,8 @@
 
 DSV allows for visualization of data structures for the learning environment. The interactive tools allows for a greater understanding of data structures and faster learning.
 
+![Demonstration of Stack Visualization](assets/Demo.png "Stack Visualizer")
+
 ## Install
 
 **This tool is currently only officially supported on windows OS**
