@@ -7,7 +7,7 @@ sf::Clock GUI::mClock;
 GUI::GUI(sf::RenderWindow& window)
 	: mMainFlags(ImGuiWindowFlags_None)
 	, mNodeFlags(ImGuiWindowFlags_None)
-	, spawnNode(false)
+	, spawnElement(false)
 	, peekMenu(false)
 	, peek(false)
 	, pop(false)
@@ -38,7 +38,7 @@ void GUI::Render(sf::RenderWindow& window)
 	//ImGui::ShowDemoWindow();
 	if (mStackMenu) StackMenu();
 	else MainMenu();
-
+	
 	if (peekMenu) PeekPopup();
 }
 
@@ -65,9 +65,9 @@ void GUI::StackMenu()
 	ImGui::Begin("Stack Panel", &mStackMenu, mMainFlags);
 	AboutBar();
 
-	if (ImGui::Button("Add Node", ImVec2(120.f, 25.f)) && mDataStr[0] != 0 && mDataStr[0] != 32) 
+	if (ImGui::Button("Push", ImVec2(120.f, 25.f)) && mDataStr[0] != 0 && mDataStr[0] != 32) 
 	{
-		spawnNode = true;
+		spawnElement = true;
 		spawnData = mDataStr;
 	}
 	ImGui::SameLine();

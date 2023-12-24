@@ -9,14 +9,14 @@ private:
 	};
 
 	std::vector<Frame> mStack;
-	sf::Vector2f mOffset;
 	sf::Text mText;
 	sf::Font mFont;
 
 public:
-	StackManager(const sf::Vector2f& location);
+	StackManager();
 	void Push(const std::string& data);
 	void Pop();
 	const std::string Peek();
+	void UpdateOffset(const sf::Vector2i& offset);
 	void Render(sf::RenderWindow& window);
 };

@@ -1,13 +1,16 @@
 #include "StackManager.h"
 
-StackManager::StackManager(const sf::Vector2f& location) 
-	: mOffset(location)
+StackManager::StackManager() 
 {
 	mFont.loadFromFile("assets/Roboto-Regular.ttf");
 	mFont.setSmooth(true);
 	mText.setFont(mFont);
 	mText.setFillColor(sf::Color::Black);
 	mText.setCharacterSize(18.f);
+}
+
+void StackManager::UpdateOffset(const sf::Vector2i& offset) {
+	//mOffset = offset;
 }
 
 void StackManager::Push(const std::string& data) 
@@ -17,7 +20,7 @@ void StackManager::Push(const std::string& data)
 	f.rect.setOrigin(f.rect.getSize() / 2.f);
 	f.rect.setOutlineColor(sf::Color::Black);
 	f.rect.setOutlineThickness(1.f);
-	f.rect.setPosition(sf::Vector2f(mOffset.x, mOffset.y + (mStack.size() * -70.f - mStack.size())));
+	f.rect.setPosition(sf::Vector2f(0.f, mStack.size() * -70.f - mStack.size()));
 	f.data = data;
 
 	mStack.push_back(f);

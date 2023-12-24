@@ -3,7 +3,7 @@
 Game::Game()
 	: mWindow(sf::VideoMode(1500, 900), "DSV | Data Structure Visualization Tool | By: Garrett Bassen", sf::Style::Default, sf::ContextSettings(0, 0, 8))
 	, mView(sf::Vector2f(0.f,0.f), sf::Vector2f(1920.f, 1080.f))
-	, mStack(sf::Vector2f(0.f,0.f))
+	, mStack()
 	, mIsDragging(false)
 	, mMousePos(0, 0)
 	, mGUI(mWindow)
@@ -57,9 +57,9 @@ void Game::Update()
 	mWindow.setView(mView);
 	mGUI.Update(mWindow);
 	
-	if (mGUI.spawnNode) 
+	if (mGUI.spawnElement)
 	{
-		mGUI.spawnNode = false;
+		mGUI.spawnElement = false;
 		mStack.Push(mGUI.spawnData);
 	}
 	if (mGUI.pop) 
@@ -77,7 +77,7 @@ void Game::Update()
 	if (mClock.getElapsedTime().asSeconds() >= 1.f / 60.f) 
 	{
 		mClock.restart();
-		if (mIsDragging) 
+		if (mIsDragging)
 		{
 			mView.move(-(sf::Mouse::getPosition().x - mMousePos.x), -(sf::Mouse::getPosition().y - mMousePos.y));
 			mMousePos = sf::Mouse::getPosition();

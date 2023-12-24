@@ -2,6 +2,7 @@
 #include "imgui.h"
 #include "imgui-SFML.h"
 #include <SFML/System/Clock.hpp>
+#include <SFML/Window/Event.hpp>
 
 class GUI {
 private:
@@ -12,7 +13,7 @@ private:
 	bool mStackMenu;
 
 public:
-	bool spawnNode;
+	bool spawnElement;
 	bool peekMenu;
 	bool peek;
 	bool pop;
@@ -21,7 +22,7 @@ public:
 public:
 	GUI(sf::RenderWindow& window);
 	~GUI();
-	static void ProcessEvents(const sf::Event& event);
+	void ProcessEvents(const sf::Event& event);
 	static void Update(sf::RenderWindow& window);
 	void Render(sf::RenderWindow& window);
 
