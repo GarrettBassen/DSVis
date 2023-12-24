@@ -5,17 +5,17 @@
 
 class GUI {
 private:
-	static ImGuiWindowFlags mNodeFlags;
-	static ImGuiWindowFlags mMainFlags;
-	static bool mIsInitialized;
+	ImGuiWindowFlags mNodeFlags;
+	ImGuiWindowFlags mMainFlags;
 	static sf::Clock mClock;
 	char mDataStr[10] = "";
+
 public:
-	bool spawnCircle;
+	bool spawnNode;
+	bool peekMenu;
+	bool peek;
 	bool pop;
 	std::string spawnData;
-	float xPos;
-	float yPos;
 
 public:
 	GUI(sf::RenderWindow& window);

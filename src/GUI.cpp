@@ -2,23 +2,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-ImGuiWindowFlags GUI::mNodeFlags = ImGuiWindowFlags_None;
-ImGuiWindowFlags GUI::mMainFlags = ImGuiWindowFlags_None;
-bool GUI::mIsInitialized = false;
 sf::Clock GUI::mClock;
 
 GUI::GUI(sf::RenderWindow& window)
-	: spawnCircle(false)
+	: mMainFlags(ImGuiWindowFlags_None)
+	, mNodeFlags(ImGuiWindowFlags_None)
+	, spawnNode(false)
+	, peekMenu(false)
+	, peek(false)
 	, pop(false)
 	, spawnData("NULL")
-	, xPos(0)
-	, yPos(0)
 {
-	if (!mIsInitialized) {
-		ImGui::SFML::Init(window);
-		InitStyle();
-		mIsInitialized = true;
-	}
+	ImGui::SFML::Init(window);
+	InitStyle();
 }
 
 GUI::~GUI() {
@@ -51,7 +47,7 @@ void GUI::MainMenu() {
 	ImGui::EndMenuBar();
 
 	if (ImGui::Button("Add Node", ImVec2(120.f, 25.f)) && mDataStr[0] != 0) {
-		spawnCircle = true;
+		spawnNode = true;
 		spawnData = mDataStr;
 	}
 	ImGui::SameLine();
@@ -64,16 +60,21 @@ void GUI::MainMenu() {
 	}
 
 	ImGui::SameLine();
-	if (ImGui::Button("Peek", ImVec2(120.f, 25.f)))
-		ImGui::OpenPopup("Peek Info");
+	if (ImGui::Button("Peek", ImVec2(120.f, 25.f))) {
+		peek = true;
+	}
 
-	// Always center this window when appearing
+	if (peekMenu) {
+		peekMenu = false;
+		ImGui::OpenPopup("Peek Info");
+	}
+
 	ImVec2 center = ImGui::GetMainViewport()->GetCenter();
 	ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
 
 	if (ImGui::BeginPopupModal("Peek Info", NULL, ImGuiWindowFlags_AlwaysAutoResize))
 	{
-		ImGui::Text("The top of the stack is %s", spawnData);
+		ImGui::Text("The top of the stack is %s", &spawnData);
 		ImGui::Separator();
 
 		if (ImGui::Button("OK", ImVec2(190, 0))) { ImGui::CloseCurrentPopup(); }

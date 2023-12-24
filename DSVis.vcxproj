@@ -155,6 +155,7 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GUI.cpp" />
     <ClCompile Include="src\Node.cpp" />
+    <ClCompile Include="src\StackManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="libraries\imgui\imconfig-SFML.h" />
@@ -269,7 +270,7 @@
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GUI.h" />
     <ClInclude Include="src\Node.h" />
-    <ClInclude Include="src\Stack.hpp" />
+    <ClInclude Include="src\StackManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\icon.png" />

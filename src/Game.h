@@ -3,7 +3,7 @@
 #include <vector>
 #include "GUI.h"
 #include "Node.h"
-#include "Stack.hpp"
+#include "StackManager.h"
 
 class Game {
 private:
@@ -15,9 +15,7 @@ private:
 	bool mIsDragging;
 	sf::Clock mClock;
 	float mZoom;
-	sf::Font mFont;
-	sf::Text mText;
-	std::vector<Stack> stack;
+	StackManager mStack;
 
 public:
 	Game();
@@ -27,6 +25,4 @@ private:
 	void ProcessEvents();
 	void Update();
 	void Render();
-	void AddNode(const std::string& data);
-	void PopNode();
 };
