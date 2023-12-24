@@ -12,41 +12,61 @@ GUI::GUI(sf::RenderWindow& window)
 	, peek(false)
 	, pop(false)
 	, spawnData("NULL")
+	, mStackMenu(false)
 {
 	ImGui::SFML::Init(window);
 	InitStyle();
 }
 
-GUI::~GUI() {
+GUI::~GUI() 
+{
 	ImGui::SFML::Shutdown();
 }
 
-void GUI::ProcessEvents(const sf::Event& event) {
+void GUI::ProcessEvents(const sf::Event& event) 
+{
 	ImGui::SFML::ProcessEvent(event);
 }
 
-void GUI::Update(sf::RenderWindow& window) {
+void GUI::Update(sf::RenderWindow& window) 
+{
 	ImGui::SFML::Update(window, mClock.restart());
 }
 
-void GUI::Render(sf::RenderWindow& window) {
+void GUI::Render(sf::RenderWindow& window) 
+{
 	//ImGui::ShowDemoWindow();
-	MainMenu();
+	if (mStackMenu) StackMenu();
+	else MainMenu();
+
+	if (peekMenu) PeekPopup();
 }
 
-void GUI::MainMenu() {
+void GUI::MainMenu() 
+{
 	ImGui::SetNextWindowSize(ImVec2(265.f, 122.f));
 	ImGui::Begin("Control Panel", NULL, mMainFlags);
+	AboutBar();
 
-	ImGui::BeginMenuBar();
-	if (ImGui::BeginMenu("About"))
+	if (ImGui::Button(("Stack"), ImVec2(120.f, 25.f))) { mStackMenu = true; }
+	ImGui::SameLine();
+	if (ImGui::Button(("TODO"), ImVec2(120.f, 25.f))) {}
+	
+	if (ImGui::Button(("TODO"), ImVec2(120.f, 25.f))) {}
+	ImGui::SameLine();
+	if (ImGui::Button(("TODO"), ImVec2(120.f, 25.f))) {}
+
+	ImGui::End();
+}
+
+void GUI::StackMenu() 
+{
+	ImGui::SetNextWindowSize(ImVec2(265.f, 122.f));
+	ImGui::Begin("Stack Panel", &mStackMenu, mMainFlags);
+	AboutBar();
+
+	if (ImGui::Button("Add Node", ImVec2(120.f, 25.f)) && mDataStr[0] != 0 && mDataStr[0] != 32) 
 	{
-		AboutBar();
-		ImGui::EndMenu();
-	}
-	ImGui::EndMenuBar();
-
-	if (ImGui::Button("Add Node", ImVec2(120.f, 25.f)) && mDataStr[0] != 0) {
 		spawnNode = true;
 		spawnData = mDataStr;
 	}
@@ -55,52 +75,55 @@ void GUI::MainMenu() {
 	ImGui::InputTextWithHint(" ", "Node Data", mDataStr, sizeof(mDataStr));
 	ImGui::PopItemWidth();
 
-	if (ImGui::Button("Pop", ImVec2(120.f, 25.f))) {
-		pop = true;
-	}
-
+	if (ImGui::Button("Pop", ImVec2(120.f, 25.f))) { pop = true; }
 	ImGui::SameLine();
-	if (ImGui::Button("Peek", ImVec2(120.f, 25.f))) {
-		peek = true;
-	}
+	if (ImGui::Button("Peek", ImVec2(120.f, 25.f))) { peek = true; }
 
-	if (peekMenu) {
-		peekMenu = false;
-		ImGui::OpenPopup("Peek Info");
-	}
+	ImGui::End();
+}
 
+void GUI::PeekPopup() 
+{
 	ImVec2 center = ImGui::GetMainViewport()->GetCenter();
 	ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
 
+	ImGui::OpenPopup("Peek Info");
 	if (ImGui::BeginPopupModal("Peek Info", NULL, ImGuiWindowFlags_AlwaysAutoResize))
 	{
 		ImGui::Text("The top of the stack is %s", &spawnData);
 		ImGui::Separator();
 
-		if (ImGui::Button("OK", ImVec2(190, 0))) { ImGui::CloseCurrentPopup(); }
+		if (ImGui::Button("OK", ImVec2(190, 0))) { peekMenu = false; }
+
 		ImGui::EndPopup();
 	}
-
-	ImGui::End();
 }
 
-void GUI::AboutBar() {
-	ImGui::MenuItem("Made By: Garrett Bassen 12/2023", NULL, false, false);
-	ImGui::MenuItem("Program uses SFML and Dear imgui", NULL, false, false);
-	ImGui::Separator();
-
-	ImGui::Button("Copy Github Account Link");
-	if (ImGui::BeginItemTooltip())
+void GUI::AboutBar() 
+{
+	ImGui::BeginMenuBar();
+	if (ImGui::BeginMenu("About")) 
 	{
-		ImGui::Text("https://github.com/GarrettBassen");
-		ImGui::LogToClipboard();
-		ImGui::LogText("https://github.com/GarrettBassen");
-		ImGui::LogFinish();
-		ImGui::EndTooltip();
+		ImGui::MenuItem("Made By: Garrett Bassen 12/2023", NULL, false, false);
+		ImGui::MenuItem("Program uses SFML and Dear imgui", NULL, false, false);
+		ImGui::Separator();
+
+		ImGui::Button("Copy Github Account Link");
+		if (ImGui::BeginItemTooltip())
+		{
+			ImGui::Text("https://github.com/GarrettBassen");
+			ImGui::LogToClipboard();
+			ImGui::LogText("https://github.com/GarrettBassen");
+			ImGui::LogFinish();
+			ImGui::EndTooltip();
+		}
+		ImGui::EndMenu();
 	}
+	ImGui::EndMenuBar();
 }
 
-void GUI::InitStyle() {
+void GUI::InitStyle() 
+{
 	mMainFlags |= ImGuiWindowFlags_MenuBar;
 	mMainFlags |= ImGuiWindowFlags_AlwaysAutoResize;
 	mMainFlags |= ImGuiWindowFlags_NoCollapse;

@@ -7,6 +7,9 @@ DSV allows for visualization of data structures for the learning environment. Th
 **This tool is currently only officially supported on windows OS**
 All code should be cross compatible but install instructions are not provided for linux of macOS
 
+**ATTENTION:**
+INSTALL INSTRUCTIONS ARE TARGETED TOWARDS VISUAL STUDIO. INSTALL SCRIPT WILL WORK REGARDLESS, ALTHOUGH ADDITIONAL LINKING WILL NEED DONE IF YOU DO NOT USE THE SOLUTION FILE
+
 Install Instructions:
 1. Download or clone
 2. Run `setup.bat`

@@ -9,6 +9,7 @@ private:
 	ImGuiWindowFlags mMainFlags;
 	static sf::Clock mClock;
 	char mDataStr[10] = "";
+	bool mStackMenu;
 
 public:
 	bool spawnNode;
@@ -28,4 +29,7 @@ private:
 	void InitStyle();
 	void MainMenu();
 	void AboutBar();
+
+	void StackMenu();
+	void PeekPopup();
 };

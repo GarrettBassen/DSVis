@@ -10,7 +10,8 @@ StackManager::StackManager(const sf::Vector2f& location)
 	mText.setCharacterSize(18.f);
 }
 
-void StackManager::Push(const std::string& data) {
+void StackManager::Push(const std::string& data) 
+{
 	Frame f;
 	f.rect.setSize(sf::Vector2f(100.f, 70.f));
 	f.rect.setOrigin(f.rect.getSize() / 2.f);
@@ -22,17 +23,21 @@ void StackManager::Push(const std::string& data) {
 	mStack.push_back(f);
 }
 
-void StackManager::Pop() {
+void StackManager::Pop() 
+{
 	if (!mStack.empty())
 		mStack.pop_back();
 }
 
-const std::string StackManager::Peek() {
+const std::string StackManager::Peek() 
+{
 	return mStack.empty() ? "NULL" : mStack.back().data;
 }
 
-void StackManager::Render(sf::RenderWindow& window) {
-	for (Frame f : mStack) {
+void StackManager::Render(sf::RenderWindow& window) 
+{
+	for (Frame f : mStack) 
+	{
 		mText.setString(f.data);
 		mText.setPosition(f.rect.getPosition().x - 4.f - (f.data.size() * mText.getCharacterSize()) / 4.f, f.rect.getPosition().y - mText.getCharacterSize() / 2.f);
 
