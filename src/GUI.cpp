@@ -77,7 +77,8 @@ void GUI::StackMenu()
 
 	if (ImGui::Button("Pop", ImVec2(120.f, 25.f))) { pop = true; }
 	ImGui::SameLine();
-	if (ImGui::Button("Peek", ImVec2(120.f, 25.f))) { peek = true; }
+	if (ImGui::Button("Peek", ImVec2(120.f, 25.f))) 
+	{ peek = true; }
 
 	ImGui::End();
 }
@@ -90,7 +91,7 @@ void GUI::PeekPopup()
 	ImGui::OpenPopup("Peek Info");
 	if (ImGui::BeginPopupModal("Peek Info", NULL, ImGuiWindowFlags_AlwaysAutoResize))
 	{
-		ImGui::Text("The top of the stack is %s", &spawnData);
+		ImGui::Text("The top of the stack is %s", spawnData.c_str());
 		ImGui::Separator();
 
 		if (ImGui::Button("OK", ImVec2(190, 0))) { peekMenu = false; }

@@ -1,6 +1,7 @@
 #include "StackManager.h"
 
-StackManager::StackManager() 
+StackManager::StackManager()
+	: mStack()
 {
 	mFont.loadFromFile("assets/Roboto-Regular.ttf");
 	mFont.setSmooth(true);
@@ -32,7 +33,7 @@ void StackManager::Pop()
 		mStack.pop_back();
 }
 
-const std::string StackManager::Peek() 
+const std::string StackManager::Peek()
 {
 	return mStack.empty() ? "NULL" : mStack.back().data;
 }
