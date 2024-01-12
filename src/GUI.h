@@ -11,6 +11,7 @@ private:
 	static sf::Clock mClock;
 	char mDataStr[10] = "";
 	bool mStackMenu;
+	bool mListMenu;
 
 public:
 	bool spawnElement;
@@ -33,4 +34,6 @@ private:
 
 	void StackMenu();
 	void PeekPopup();
+
+	void ListMenu();
 };

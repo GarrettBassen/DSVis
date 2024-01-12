@@ -13,6 +13,7 @@ GUI::GUI(sf::RenderWindow& window)
 	, pop(false)
 	, spawnData("NULL")
 	, mStackMenu(false)
+	, mListMenu(false)
 {
 	ImGui::SFML::Init(window);
 	InitStyle();
@@ -37,6 +38,7 @@ void GUI::Render(sf::RenderWindow& window)
 {
 	//ImGui::ShowDemoWindow();
 	if (mStackMenu) StackMenu();
+	else if (mListMenu) ListMenu();
 	else MainMenu();
 	
 	if (peekMenu) PeekPopup();
@@ -50,11 +52,45 @@ void GUI::MainMenu()
 
 	if (ImGui::Button(("Stack"), ImVec2(120.f, 25.f))) { mStackMenu = true; }
 	ImGui::SameLine();
-	if (ImGui::Button(("TODO"), ImVec2(120.f, 25.f))) {}
+	if (ImGui::Button(("Linked List"), ImVec2(120.f, 25.f))) { mListMenu = true; }
 	
 	if (ImGui::Button(("TODO"), ImVec2(120.f, 25.f))) {}
 	ImGui::SameLine();
 	if (ImGui::Button(("TODO"), ImVec2(120.f, 25.f))) {}
+
+	ImGui::End();
+}
+
+void GUI::ListMenu()
+{
+	ImGui::SetNextWindowSize(ImVec2(265.f, 155.f));
+	ImGui::Begin("Linked List Panel", &mListMenu, mMainFlags);
+	AboutBar();
+
+	// TODO USE SEPARATE DATA STRING
+	ImGui::PushItemWidth(250.f);
+	ImGui::InputTextWithHint(" ", "Node Data", mDataStr, sizeof(mDataStr));
+	ImGui::PopItemWidth();
+
+	if (ImGui::Button("Push Front", ImVec2(120.f, 25.f)) && mDataStr[0] != 0 && mDataStr[0] != 32)
+	{
+		// TODO
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Push Back", ImVec2(120.f, 25.f)) && mDataStr[0] != 0 && mDataStr[0] != 32)
+	{
+		// TODO
+	}
+
+	if (ImGui::Button("Pop Back", ImVec2(120.f, 25.f)))
+	{ 
+		// TODO 
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Pop Front", ImVec2(120.f, 25.f)))
+	{
+		// TODO
+	}
 
 	ImGui::End();
 }
@@ -91,7 +127,7 @@ void GUI::PeekPopup()
 	ImGui::OpenPopup("Peek Info");
 	if (ImGui::BeginPopupModal("Peek Info", NULL, ImGuiWindowFlags_AlwaysAutoResize))
 	{
-		ImGui::Text("The top of the stack is %s", spawnData.c_str());
+		ImGui::Text("The top of the stack is: %s", spawnData.c_str());
 		ImGui::Separator();
 
 		if (ImGui::Button("OK", ImVec2(190, 0))) { peekMenu = false; }
