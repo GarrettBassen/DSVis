@@ -1,6 +1,5 @@
 #pragma once
 #include "SFML/Graphics.hpp"
-#include <memory>
 
 #include "StackGUI.h"
 
@@ -17,8 +16,8 @@ private:
 
 public:
 	StackManager();
-	void Push(const std::string& data);
-	void Pop();
-	const std::string Peek();
-	void Render(sf::RenderWindow& window);
+	void push(const std::string& data);
+	void pop();
+	const std::string peek();
+	void render(sf::RenderWindow& window);
 };

@@ -10,7 +10,7 @@ StackManager::StackManager()
 	m_text.setCharacterSize(18.f);
 }
 
-void StackManager::Push(const std::string& data) 
+void StackManager::push(const std::string& data) 
 {
 	Frame f;
 	f.rect.setSize(sf::Vector2f(100.f, 70.f));
@@ -23,18 +23,18 @@ void StackManager::Push(const std::string& data)
 	m_stack.push_back(f);
 }
 
-void StackManager::Pop() 
+void StackManager::pop() 
 {
 	if (!m_stack.empty())
 		m_stack.pop_back();
 }
 
-const std::string StackManager::Peek()
+const std::string StackManager::peek()
 {
 	return m_stack.empty() ? "NULL" : m_stack.back().data;
 }
 
-void StackManager::Render(sf::RenderWindow& window) 
+void StackManager::render(sf::RenderWindow& window) 
 {
 	for (Frame f : m_stack)
 	{

@@ -9,8 +9,15 @@ bool UITriggers::getStackPeek = false;
 bool UITriggers::pushStackElement = false;
 
 
-// Linked List Variables
-bool UITriggers::showList = false;
+// Deque Variables
+bool UITriggers::showDeque = false;
+bool UITriggers::showDequePeekFront = false;
+bool UITriggers::showDequePeekBack = false;
+
+bool UITriggers::setDequePopFront = false;
+bool UITriggers::setDequePopBack = false;
+bool UITriggers::getDequePeekFront = false;
+bool UITriggers::getDequePeekBack = false;
 
 
 // Used to transfer data across classes

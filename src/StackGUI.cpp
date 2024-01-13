@@ -7,7 +7,7 @@ StackGUI::StackGUI()
 	m_Flags |= ImGuiWindowFlags_NoCollapse;
 }
 
-void StackGUI::StackMenu()
+void StackGUI::menu()
 {
 	ImGui::SetNextWindowSize(ImVec2(265.f, 98.f));
 	ImGui::Begin("Stack Panel", &UITriggers::showStack, m_Flags);
@@ -29,7 +29,7 @@ void StackGUI::StackMenu()
 	ImGui::End();
 }
 
-void StackGUI::PeekPopup()
+void StackGUI::popup()
 {
 	ImVec2 center = ImGui::GetMainViewport()->GetCenter();
 	ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));

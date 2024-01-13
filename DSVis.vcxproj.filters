@@ -42,9 +42,6 @@
     <ClCompile Include="libraries\imgui\imgui-SFML.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Node.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\StackManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -52,6 +49,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\UITriggers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DequeGUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DequeManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -389,9 +392,6 @@
     <ClInclude Include="libraries\SFML\include\SFML\Window.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Node.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\StackManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -399,6 +399,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\UITriggers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DequeGUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DequeManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

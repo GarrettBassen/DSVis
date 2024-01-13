@@ -5,13 +5,13 @@
 
 #include "UITriggers.h"
 
-class StackGUI {
+class DequeGUI {
 private:
-	ImGuiWindowFlags m_Flags;
+	ImGuiWindowFlags m_flags;
 	char m_data[10] = "";
 
 public:
-	StackGUI();
+	DequeGUI();
 	void menu();
 	void popup();
 };

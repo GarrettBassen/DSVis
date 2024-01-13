@@ -1,7 +1,9 @@
 #pragma once
 #include <string>
 
-namespace UITriggers {
+namespace UITriggers 
+{
+	// Stack Variables
 	extern bool showStack;
 	extern bool showStackPeek;
 
@@ -9,7 +11,18 @@ namespace UITriggers {
 	extern bool getStackPeek;
 	extern bool pushStackElement;
 
-	extern bool showList;
 
+	// Deque Variables
+	extern bool showDeque;
+	extern bool showDequePeekFront;
+	extern bool showDequePeekBack;
+
+	extern bool setDequePopFront;
+	extern bool setDequePopBack;
+	extern bool getDequePeekFront;
+	extern bool getDequePeekBack;
+
+
+	// Misc Variables
 	extern std::string tmpData;
 }

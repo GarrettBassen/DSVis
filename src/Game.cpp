@@ -6,32 +6,32 @@
 Game::Game()
 	: m_window(sf::VideoMode(1500, 900), "DSV | Data Structure Visualization Tool | By: Garrett Bassen", sf::Style::Default, sf::ContextSettings(0, 0, 8))
 	, m_view(sf::Vector2f(0.f,0.f), sf::Vector2f(1920.f, 1080.f))
-	, m_stack()
 	, m_isDragging(false)
 	, m_mousePos(0, 0)
 	, m_GUI(m_window)
 	, m_zoom(1.f)
+	, m_stack()
 {
 	sf::Image image;
 	image.loadFromFile("assets/icon.png");
 	m_window.setIcon(image.getSize().x, image.getSize().y, image.getPixelsPtr());
 }
 
-void Game::Run() 
+void Game::run() 
 {
 	while (m_window.isOpen())
 	{
-		ProcessEvents();
-		Update();
-		Render();
+		process_events();
+		update();
+		render();
 	}
 }
 
-void Game::ProcessEvents()
+void Game::process_events()
 {
 	while (m_window.pollEvent(m_event))
 	{
-		m_GUI.ProcessEvents(m_event);
+		m_GUI.process_events(m_event);
 
 		switch (m_event.type)
 		{
@@ -55,26 +55,26 @@ void Game::ProcessEvents()
 	}
 }
 
-void Game::Update() 
+void Game::update() 
 {
 	m_window.setView(m_view);
-	m_GUI.Update(m_window);
+	m_GUI.update(m_window);
 	
 	if (UITriggers::pushStackElement)
 	{
 		UITriggers::pushStackElement = false;
-		m_stack.Push(UITriggers::tmpData);
+		m_stack.push(UITriggers::tmpData);
 		UITriggers::tmpData = "NULL";
 	}
 	if (UITriggers::setStackPop) 
 	{
 		UITriggers::setStackPop = false;
-		m_stack.Pop();
+		m_stack.pop();
 	}
 	if (UITriggers::getStackPeek)
 	{
 		UITriggers::getStackPeek = false;
-		UITriggers::tmpData = m_stack.Peek();
+		UITriggers::tmpData = m_stack.peek();
 		UITriggers::showStackPeek = true;
 	}
 
@@ -89,12 +89,12 @@ void Game::Update()
 	}
 }
 
-void Game::Render() 
+void Game::render() 
 {
 	m_window.clear(sf::Color(185, 172, 154, 240));
 
-	m_stack.Render(m_window);
-	m_GUI.Render(m_window);
+	m_stack.render(m_window);
+	m_GUI.render(m_window);
 
 	ImGui::SFML::Render(m_window);
 	m_window.display();

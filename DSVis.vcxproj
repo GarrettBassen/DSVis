@@ -154,7 +154,8 @@
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GUI.cpp" />
-    <ClCompile Include="src\Node.cpp" />
+    <ClCompile Include="src\DequeGUI.cpp" />
+    <ClCompile Include="src\DequeManager.cpp" />
     <ClCompile Include="src\StackGUI.cpp" />
     <ClCompile Include="src\StackManager.cpp" />
     <ClCompile Include="src\UITriggers.cpp" />
@@ -271,7 +272,8 @@
     <ClInclude Include="libraries\SFML\include\SFML\Window\WindowStyle.hpp" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GUI.h" />
-    <ClInclude Include="src\Node.h" />
+    <ClInclude Include="src\DequeGUI.h" />
+    <ClInclude Include="src\DequeManager.h" />
     <ClInclude Include="src\StackGUI.h" />
     <ClInclude Include="src\StackManager.h" />
     <ClInclude Include="src\UITriggers.h" />

@@ -1,8 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <vector>
+
 #include "GUI.h"
-#include "Node.h"
 #include "StackManager.h"
 
 class Game {
@@ -21,10 +20,10 @@ private:
 
 public:
 	Game();
-	void Run();
+	void run();
 
 private:
-	void ProcessEvents();
-	void Update();
-	void Render();
+	void process_events();
+	void update();
+	void render();
 };

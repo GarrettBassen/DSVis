@@ -9,7 +9,7 @@ GUI::GUI(sf::RenderWindow& window)
 	: m_Flags(ImGuiWindowFlags_None)
 {
 	ImGui::SFML::Init(window);
-	InitStyle();
+	init_style();
 }
 
 GUI::~GUI() 
@@ -17,35 +17,36 @@ GUI::~GUI()
 	ImGui::SFML::Shutdown();
 }
 
-void GUI::ProcessEvents(const sf::Event& event) 
+void GUI::process_events(const sf::Event& event) 
 {
 	ImGui::SFML::ProcessEvent(event);
 }
 
-void GUI::Update(sf::RenderWindow& window) 
+void GUI::update(sf::RenderWindow& window) 
 {
 	ImGui::SFML::Update(window, m_Clock.restart());
 }
 
-void GUI::Render(sf::RenderWindow& window) 
+void GUI::render(sf::RenderWindow& window)
 {
 	//ImGui::ShowDemoWindow();
-	if (UITriggers::showStack) { m_stackGUI.StackMenu(); }
-	else if (UITriggers::showList) ListMenu();
-	else MainMenu();
+	if (UITriggers::showStack)		{ m_stackGUI.menu(); }
+	else if (UITriggers::showDeque) { m_dequeGUI.menu(); }
+	else							{ this->menu(); }
 	
-	if (UITriggers::showStackPeek) { m_stackGUI.PeekPopup(); }
+	if (UITriggers::showStackPeek)												{ m_stackGUI.popup(); }
+	else if (UITriggers::showDequePeekBack || UITriggers::showDequePeekFront)	{ m_dequeGUI.popup(); }
 }
 
-void GUI::MainMenu() 
+void GUI::menu() 
 {
 	ImGui::SetNextWindowSize(ImVec2(265.f, 122.f));
 	ImGui::Begin("Control Panel", NULL, m_Flags);
-	AboutBar();
+	about_bar();
 
 	if (ImGui::Button(("Stack"), ImVec2(120.f, 25.f))) { UITriggers::showStack = true; }
 	ImGui::SameLine();
-	if (ImGui::Button(("Linked List"), ImVec2(120.f, 25.f))) { UITriggers::showList = true; }
+	if (ImGui::Button(("Deque"), ImVec2(120.f, 25.f))) { UITriggers::showDeque = true; }
 	
 	if (ImGui::Button(("TODO"), ImVec2(120.f, 25.f))) {}
 	ImGui::SameLine();
@@ -54,46 +55,7 @@ void GUI::MainMenu()
 	ImGui::End();
 }
 
-void GUI::ListMenu()
-{
-	// TODO
-}
-
-//void GUI::ListMenu()
-//{
-//	ImGui::SetNextWindowSize(ImVec2(265.f, 155.f));
-//	ImGui::Begin("Linked List Panel", &mListMenu, mMainFlags);
-//	AboutBar();
-//
-//	// TODO USE SEPARATE DATA STRING
-//	ImGui::PushItemWidth(250.f);
-//	ImGui::InputTextWithHint(" ", "Node Data", mDataStr, sizeof(mDataStr));
-//	ImGui::PopItemWidth();
-//
-//	if (ImGui::Button("Push Front", ImVec2(120.f, 25.f)) && mDataStr[0] != 0 && mDataStr[0] != 32)
-//	{
-//		// TODO
-//	}
-//	ImGui::SameLine();
-//	if (ImGui::Button("Push Back", ImVec2(120.f, 25.f)) && mDataStr[0] != 0 && mDataStr[0] != 32)
-//	{
-//		// TODO
-//	}
-//
-//	if (ImGui::Button("Pop Back", ImVec2(120.f, 25.f)))
-//	{ 
-//		// TODO 
-//	}
-//	ImGui::SameLine();
-//	if (ImGui::Button("Pop Front", ImVec2(120.f, 25.f)))
-//	{
-//		// TODO
-//	}
-//
-//	ImGui::End();
-//}
-
-void GUI::AboutBar() 
+void GUI::about_bar()
 {
 	ImGui::BeginMenuBar();
 	if (ImGui::BeginMenu("About")) 
@@ -116,7 +78,7 @@ void GUI::AboutBar()
 	ImGui::EndMenuBar();
 }
 
-void GUI::InitStyle() 
+void GUI::init_style() 
 {
 	m_Flags |= ImGuiWindowFlags_MenuBar;
 	m_Flags |= ImGuiWindowFlags_AlwaysAutoResize;
