@@ -1,19 +1,12 @@
-#include "GUI.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-sf::Clock GUI::mClock;
+#include "GUI.h"
+
+sf::Clock GUI::m_Clock;
 
 GUI::GUI(sf::RenderWindow& window)
-	: mMainFlags(ImGuiWindowFlags_None)
-	, mNodeFlags(ImGuiWindowFlags_None)
-	, spawnElement(false)
-	, peekMenu(false)
-	, peek(false)
-	, pop(false)
-	, spawnData("NULL")
-	, mStackMenu(false)
-	, mListMenu(false)
+	: m_Flags(ImGuiWindowFlags_None)
 {
 	ImGui::SFML::Init(window);
 	InitStyle();
@@ -31,28 +24,28 @@ void GUI::ProcessEvents(const sf::Event& event)
 
 void GUI::Update(sf::RenderWindow& window) 
 {
-	ImGui::SFML::Update(window, mClock.restart());
+	ImGui::SFML::Update(window, m_Clock.restart());
 }
 
 void GUI::Render(sf::RenderWindow& window) 
 {
 	//ImGui::ShowDemoWindow();
-	if (mStackMenu) StackMenu();
-	else if (mListMenu) ListMenu();
+	if (UITriggers::showStack) { m_stackGUI.StackMenu(); }
+	else if (UITriggers::showList) ListMenu();
 	else MainMenu();
 	
-	if (peekMenu) PeekPopup();
+	if (UITriggers::showStackPeek) { m_stackGUI.PeekPopup(); }
 }
 
 void GUI::MainMenu() 
 {
 	ImGui::SetNextWindowSize(ImVec2(265.f, 122.f));
-	ImGui::Begin("Control Panel", NULL, mMainFlags);
+	ImGui::Begin("Control Panel", NULL, m_Flags);
 	AboutBar();
 
-	if (ImGui::Button(("Stack"), ImVec2(120.f, 25.f))) { mStackMenu = true; }
+	if (ImGui::Button(("Stack"), ImVec2(120.f, 25.f))) { UITriggers::showStack = true; }
 	ImGui::SameLine();
-	if (ImGui::Button(("Linked List"), ImVec2(120.f, 25.f))) { mListMenu = true; }
+	if (ImGui::Button(("Linked List"), ImVec2(120.f, 25.f))) { UITriggers::showList = true; }
 	
 	if (ImGui::Button(("TODO"), ImVec2(120.f, 25.f))) {}
 	ImGui::SameLine();
@@ -63,78 +56,42 @@ void GUI::MainMenu()
 
 void GUI::ListMenu()
 {
-	ImGui::SetNextWindowSize(ImVec2(265.f, 155.f));
-	ImGui::Begin("Linked List Panel", &mListMenu, mMainFlags);
-	AboutBar();
-
-	// TODO USE SEPARATE DATA STRING
-	ImGui::PushItemWidth(250.f);
-	ImGui::InputTextWithHint(" ", "Node Data", mDataStr, sizeof(mDataStr));
-	ImGui::PopItemWidth();
-
-	if (ImGui::Button("Push Front", ImVec2(120.f, 25.f)) && mDataStr[0] != 0 && mDataStr[0] != 32)
-	{
-		// TODO
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("Push Back", ImVec2(120.f, 25.f)) && mDataStr[0] != 0 && mDataStr[0] != 32)
-	{
-		// TODO
-	}
-
-	if (ImGui::Button("Pop Back", ImVec2(120.f, 25.f)))
-	{ 
-		// TODO 
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("Pop Front", ImVec2(120.f, 25.f)))
-	{
-		// TODO
-	}
-
-	ImGui::End();
+	// TODO
 }
 
-void GUI::StackMenu() 
-{
-	ImGui::SetNextWindowSize(ImVec2(265.f, 122.f));
-	ImGui::Begin("Stack Panel", &mStackMenu, mMainFlags);
-	AboutBar();
-
-	if (ImGui::Button("Push", ImVec2(120.f, 25.f)) && mDataStr[0] != 0 && mDataStr[0] != 32) 
-	{
-		spawnElement = true;
-		spawnData = mDataStr;
-	}
-	ImGui::SameLine();
-	ImGui::PushItemWidth(120.f);
-	ImGui::InputTextWithHint(" ", "Node Data", mDataStr, sizeof(mDataStr));
-	ImGui::PopItemWidth();
-
-	if (ImGui::Button("Pop", ImVec2(120.f, 25.f))) { pop = true; }
-	ImGui::SameLine();
-	if (ImGui::Button("Peek", ImVec2(120.f, 25.f))) 
-	{ peek = true; }
-
-	ImGui::End();
-}
-
-void GUI::PeekPopup() 
-{
-	ImVec2 center = ImGui::GetMainViewport()->GetCenter();
-	ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
-
-	ImGui::OpenPopup("Peek Info");
-	if (ImGui::BeginPopupModal("Peek Info", NULL, ImGuiWindowFlags_AlwaysAutoResize))
-	{
-		ImGui::Text("The top of the stack is: %s", spawnData.c_str());
-		ImGui::Separator();
-
-		if (ImGui::Button("OK", ImVec2(190, 0))) { peekMenu = false; }
-
-		ImGui::EndPopup();
-	}
-}
+//void GUI::ListMenu()
+//{
+//	ImGui::SetNextWindowSize(ImVec2(265.f, 155.f));
+//	ImGui::Begin("Linked List Panel", &mListMenu, mMainFlags);
+//	AboutBar();
+//
+//	// TODO USE SEPARATE DATA STRING
+//	ImGui::PushItemWidth(250.f);
+//	ImGui::InputTextWithHint(" ", "Node Data", mDataStr, sizeof(mDataStr));
+//	ImGui::PopItemWidth();
+//
+//	if (ImGui::Button("Push Front", ImVec2(120.f, 25.f)) && mDataStr[0] != 0 && mDataStr[0] != 32)
+//	{
+//		// TODO
+//	}
+//	ImGui::SameLine();
+//	if (ImGui::Button("Push Back", ImVec2(120.f, 25.f)) && mDataStr[0] != 0 && mDataStr[0] != 32)
+//	{
+//		// TODO
+//	}
+//
+//	if (ImGui::Button("Pop Back", ImVec2(120.f, 25.f)))
+//	{ 
+//		// TODO 
+//	}
+//	ImGui::SameLine();
+//	if (ImGui::Button("Pop Front", ImVec2(120.f, 25.f)))
+//	{
+//		// TODO
+//	}
+//
+//	ImGui::End();
+//}
 
 void GUI::AboutBar() 
 {
@@ -161,14 +118,9 @@ void GUI::AboutBar()
 
 void GUI::InitStyle() 
 {
-	mMainFlags |= ImGuiWindowFlags_MenuBar;
-	mMainFlags |= ImGuiWindowFlags_AlwaysAutoResize;
-	mMainFlags |= ImGuiWindowFlags_NoCollapse;
-
-	mNodeFlags |= ImGuiWindowFlags_NoBackground;
-	mNodeFlags |= ImGuiWindowFlags_NoTitleBar;
-	mNodeFlags |= ImGuiWindowFlags_NoResize;
-	mNodeFlags |= ImGuiWindowFlags_NoMove;
+	m_Flags |= ImGuiWindowFlags_MenuBar;
+	m_Flags |= ImGuiWindowFlags_AlwaysAutoResize;
+	m_Flags |= ImGuiWindowFlags_NoCollapse;
 
 	ImGuiStyle& mStyle = ImGui::GetStyle();
 	mStyle.ScaleAllSizes(2.f);

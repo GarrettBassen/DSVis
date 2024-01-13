@@ -1,4 +1,7 @@
+#include <string>
+
 #include "Game.h"
+#include "UITriggers.h"
 
 Game::Game()
 	: mWindow(sf::VideoMode(1500, 900), "DSV | Data Structure Visualization Tool | By: Garrett Bassen", sf::Style::Default, sf::ContextSettings(0, 0, 8))
@@ -57,21 +60,22 @@ void Game::Update()
 	mWindow.setView(mView);
 	mGUI.Update(mWindow);
 	
-	if (mGUI.spawnElement)
+	if (UITriggers::pushStackElement)
 	{
-		mGUI.spawnElement = false;
-		mStack.Push(mGUI.spawnData);
+		UITriggers::pushStackElement = false;
+		mStack.Push(UITriggers::tmpData);
+		UITriggers::tmpData = "NULL";
 	}
-	if (mGUI.pop) 
+	if (UITriggers::setStackPop) 
 	{
-		mGUI.pop = false;
+		UITriggers::setStackPop = false;
 		mStack.Pop();
 	}
-	if (mGUI.peek) 
+	if (UITriggers::getStackPeek)
 	{
-		mGUI.peek = false;
-		mGUI.spawnData = mStack.Peek();
-		mGUI.peekMenu = true;
+		UITriggers::getStackPeek = false;
+		UITriggers::tmpData = mStack.Peek();
+		UITriggers::showStackPeek = true;
 	}
 
 	if (mClock.getElapsedTime().asSeconds() >= 1.f / 60.f) 

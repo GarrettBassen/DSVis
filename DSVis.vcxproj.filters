@@ -48,6 +48,12 @@
     <ClCompile Include="src\StackManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\StackGUI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UITriggers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.h">
@@ -387,6 +393,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\StackManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\StackGUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UITriggers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

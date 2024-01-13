@@ -3,22 +3,17 @@
 #include "imgui-SFML.h"
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window/Event.hpp>
+#include <string>
+#include <memory>
+
+#include "UITriggers.h"
+#include "StackGUI.h"
 
 class GUI {
 private:
-	ImGuiWindowFlags mNodeFlags;
-	ImGuiWindowFlags mMainFlags;
-	static sf::Clock mClock;
-	char mDataStr[10] = "";
-	bool mStackMenu;
-	bool mListMenu;
-
-public:
-	bool spawnElement;
-	bool peekMenu;
-	bool peek;
-	bool pop;
-	std::string spawnData;
+	ImGuiWindowFlags m_Flags;
+	static sf::Clock m_Clock;
+	StackGUI m_stackGUI;
 
 public:
 	GUI(sf::RenderWindow& window);
@@ -31,9 +26,6 @@ private:
 	void InitStyle();
 	void MainMenu();
 	void AboutBar();
-
-	void StackMenu();
-	void PeekPopup();
 
 	void ListMenu();
 };
