@@ -4,22 +4,22 @@
 #include "UITriggers.h"
 
 Game::Game()
-	: mWindow(sf::VideoMode(1500, 900), "DSV | Data Structure Visualization Tool | By: Garrett Bassen", sf::Style::Default, sf::ContextSettings(0, 0, 8))
-	, mView(sf::Vector2f(0.f,0.f), sf::Vector2f(1920.f, 1080.f))
-	, mStack()
-	, mIsDragging(false)
-	, mMousePos(0, 0)
-	, mGUI(mWindow)
-	, mZoom(1.f)
+	: m_window(sf::VideoMode(1500, 900), "DSV | Data Structure Visualization Tool | By: Garrett Bassen", sf::Style::Default, sf::ContextSettings(0, 0, 8))
+	, m_view(sf::Vector2f(0.f,0.f), sf::Vector2f(1920.f, 1080.f))
+	, m_stack()
+	, m_isDragging(false)
+	, m_mousePos(0, 0)
+	, m_GUI(m_window)
+	, m_zoom(1.f)
 {
 	sf::Image image;
 	image.loadFromFile("assets/icon.png");
-	mWindow.setIcon(image.getSize().x, image.getSize().y, image.getPixelsPtr());
+	m_window.setIcon(image.getSize().x, image.getSize().y, image.getPixelsPtr());
 }
 
 void Game::Run() 
 {
-	while (mWindow.isOpen()) 
+	while (m_window.isOpen())
 	{
 		ProcessEvents();
 		Update();
@@ -29,27 +29,27 @@ void Game::Run()
 
 void Game::ProcessEvents()
 {
-	while (mWindow.pollEvent(mEvent))
+	while (m_window.pollEvent(m_event))
 	{
-		mGUI.ProcessEvents(mEvent);
+		m_GUI.ProcessEvents(m_event);
 
-		switch (mEvent.type)
+		switch (m_event.type)
 		{
 		case sf::Event::Closed:
-			mWindow.close();
+			m_window.close();
 			break;
 		case sf::Event::Resized:
-			mView.setSize(mEvent.size.width, mEvent.size.height);
+			m_view.setSize(m_event.size.width, m_event.size.height);
 			break;
 		case sf::Event::MouseButtonPressed:
-			mIsDragging = mEvent.mouseButton.button == sf::Mouse::Right;
-			mMousePos = sf::Mouse::getPosition();
+			m_isDragging = m_event.mouseButton.button == sf::Mouse::Right;
+			m_mousePos = sf::Mouse::getPosition();
 			break;
 		case sf::Event::MouseButtonReleased:
-			mIsDragging = false;
+			m_isDragging = false;
 			break;
 		case sf::Event::MouseWheelScrolled:
-			mView.zoom(1 + -mEvent.mouseWheelScroll.delta / 20.f);
+			m_view.zoom(1 + -m_event.mouseWheelScroll.delta / 20.f);
 			break;
 		}
 	}
@@ -57,45 +57,45 @@ void Game::ProcessEvents()
 
 void Game::Update() 
 {
-	mWindow.setView(mView);
-	mGUI.Update(mWindow);
+	m_window.setView(m_view);
+	m_GUI.Update(m_window);
 	
 	if (UITriggers::pushStackElement)
 	{
 		UITriggers::pushStackElement = false;
-		mStack.Push(UITriggers::tmpData);
+		m_stack.Push(UITriggers::tmpData);
 		UITriggers::tmpData = "NULL";
 	}
 	if (UITriggers::setStackPop) 
 	{
 		UITriggers::setStackPop = false;
-		mStack.Pop();
+		m_stack.Pop();
 	}
 	if (UITriggers::getStackPeek)
 	{
 		UITriggers::getStackPeek = false;
-		UITriggers::tmpData = mStack.Peek();
+		UITriggers::tmpData = m_stack.Peek();
 		UITriggers::showStackPeek = true;
 	}
 
-	if (mClock.getElapsedTime().asSeconds() >= 1.f / 60.f) 
+	if (m_clock.getElapsedTime().asSeconds() >= 1.f / 60.f) 
 	{
-		mClock.restart();
-		if (mIsDragging)
+		m_clock.restart();
+		if (m_isDragging)
 		{
-			mView.move(-(sf::Mouse::getPosition().x - mMousePos.x), -(sf::Mouse::getPosition().y - mMousePos.y));
-			mMousePos = sf::Mouse::getPosition();
+			m_view.move(-(sf::Mouse::getPosition().x - m_mousePos.x), -(sf::Mouse::getPosition().y - m_mousePos.y));
+			m_mousePos = sf::Mouse::getPosition();
 		}
 	}
 }
 
 void Game::Render() 
 {
-	mWindow.clear(sf::Color(185, 172, 154, 240));
+	m_window.clear(sf::Color(185, 172, 154, 240));
 
-	mStack.Render(mWindow);
-	mGUI.Render(mWindow);
+	m_stack.Render(m_window);
+	m_GUI.Render(m_window);
 
-	ImGui::SFML::Render(mWindow);
-	mWindow.display();
+	ImGui::SFML::Render(m_window);
+	m_window.display();
 }
