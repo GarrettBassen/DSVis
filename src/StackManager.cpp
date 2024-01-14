@@ -37,7 +37,17 @@ void StackManager::push()
 	f.rect.setOrigin(f.rect.getSize() / 2.f);
 	f.rect.setOutlineColor(sf::Color::Black);
 	f.rect.setOutlineThickness(1.f);
-	f.rect.setPosition(sf::Vector2f(0.f, m_stack.size() * -70.f - m_stack.size()));
+
+	if (m_stack.empty())
+	{
+		f.pos = sf::Vector2f(0.f, 0.f);
+	}
+	else
+	{
+		f.pos = sf::Vector2f(0.f, m_stack.back().pos.y - 70.f);
+	}
+
+	f.rect.setPosition(f.pos);
 	f.data = UIHelper::tmpData;
 
 	m_stack.push_back(f);
