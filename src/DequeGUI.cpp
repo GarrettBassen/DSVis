@@ -16,36 +16,36 @@ void DequeGUI::menu()
 	ImGui::InputTextWithHint(" ", "Node Data", m_data, sizeof(m_data));
 	ImGui::PopItemWidth();
 
-	if (ImGui::Button("Push Front", ImVec2(120.f, 25.f)) && m_data[0] != 0 && m_data[0] != 32)
-	{
-		UIHelper::tmpData = m_data;
-		UIHelper::pushDequeFront = true;
-	}
-	ImGui::SameLine();
 	if (ImGui::Button("Push Back", ImVec2(120.f, 25.f)) && m_data[0] != 0 && m_data[0] != 32)
 	{
 		UIHelper::tmpData = m_data;
 		UIHelper::pushDequeBack = true;
 	}
-
-	if (ImGui::Button("Pop Front", ImVec2(120.f, 25.f)))
-	{
-		UIHelper::popDequeFront = true;
-	}
 	ImGui::SameLine();
+	if (ImGui::Button("Push Front", ImVec2(120.f, 25.f)) && m_data[0] != 0 && m_data[0] != 32)
+	{
+		UIHelper::tmpData = m_data;
+		UIHelper::pushDequeFront = true;
+	}
+
 	if (ImGui::Button("Pop Back", ImVec2(120.f, 25.f)))
 	{
 		UIHelper::popDequeBack = true;
 	}
-
-	if (ImGui::Button("Peek Front", ImVec2(120.f, 25.f)))
-	{
-		UIHelper::peekDequeFront = true;
-	}
 	ImGui::SameLine();
+	if (ImGui::Button("Pop Front", ImVec2(120.f, 25.f)))
+	{
+		UIHelper::popDequeFront = true;
+	}
+
 	if (ImGui::Button("Peek Back", ImVec2(120.f, 25.f)))
 	{
 		UIHelper::peekDequeBack = true;
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Peek Front", ImVec2(120.f, 25.f)))
+	{
+		UIHelper::peekDequeFront = true;
 	}
 
 	ImGui::End();
@@ -73,7 +73,6 @@ void DequeGUI::popup()
 		{
 			UIHelper::showDequePeekBack = false;
 			UIHelper::showDequePeekFront = false;
-			UIHelper::tmpData = "NULL";
 		}
 
 		ImGui::EndPopup();

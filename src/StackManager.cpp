@@ -44,14 +44,13 @@ void StackManager::push()
 	}
 	else
 	{
-		f.pos = sf::Vector2f(0.f, m_stack.back().pos.y - 70.f);
+		f.pos = sf::Vector2f(0.f, m_stack.back().pos.y - 71.f);
 	}
 
 	f.rect.setPosition(f.pos);
 	f.data = UIHelper::tmpData;
 
 	m_stack.push_back(f);
-	UIHelper::tmpData = "NULL";
 }
 
 void StackManager::pop() 

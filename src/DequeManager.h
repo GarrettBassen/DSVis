@@ -16,10 +16,7 @@ public:
 	void update();
 
 private:
-	void push_front();
-	void push_back();
-	void pop_front();
-	void pop_back();
-	void peek_front();
-	void peek_back();
+	void push();
+	void peek();
+	void pop();
 };

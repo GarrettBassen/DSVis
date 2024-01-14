@@ -15,7 +15,7 @@ void DequeManager::render(sf::RenderWindow& window)
 	for (UIHelper::Frame f : m_deque)
 	{
 		m_text.setString(f.data);
-		m_text.setPosition(f.rect.getPosition().x - 4.f - (f.data.size() * m_text.getCharacterSize()) / 4.f, f.rect.getPosition().y - m_text.getCharacterSize() / 2.f);
+		m_text.setPosition(f.rect.getPosition().x - 5.f - (f.data.size() * m_text.getCharacterSize()) / 4.f, f.rect.getPosition().y - m_text.getCharacterSize() / 2.f);
 
 		window.draw(f.rect);
 		window.draw(m_text);
@@ -24,92 +24,75 @@ void DequeManager::render(sf::RenderWindow& window)
 
 void DequeManager::update()
 {
-	if (UIHelper::pushDequeFront) { push_front(); }
-	if (UIHelper::pushDequeBack)  { push_back(); }
-	if (UIHelper::popDequeFront)  { pop_front();  }
-	if (UIHelper::popDequeBack)	  { pop_back();   }
-	if (UIHelper::peekDequeFront) { peek_front(); }
-	if (UIHelper::peekDequeBack)  { peek_back();  }
+	if (UIHelper::pushDequeFront || UIHelper::pushDequeBack) { push(); }
+	if (UIHelper::peekDequeFront || UIHelper::peekDequeBack) { peek(); }
+	if (UIHelper::popDequeFront  || UIHelper::popDequeBack)  { pop();  }
 }
 
-void DequeManager::push_front()
+void DequeManager::push()
 {
+	UIHelper::Frame f;
+	f.rect.setSize(sf::Vector2f(100.f, 70.f));
+	f.rect.setOrigin(f.rect.getSize() / 2.f);
+	f.rect.setOutlineColor(sf::Color::Black);
+	f.rect.setOutlineThickness(1.f);
+	f.data = UIHelper::tmpData;
+
+	if (m_deque.empty())
+	{
+		f.pos = sf::Vector2f(0.f, 0.f);
+		f.rect.setPosition(f.pos);
+		m_deque.push_front(f);
+	}
+	else if (UIHelper::pushDequeFront)
+	{
+		f.pos = sf::Vector2f(m_deque.front().pos.x + 101.f, 0.f);
+		f.rect.setPosition(f.pos);
+		m_deque.push_front(f);
+	}
+	else
+	{
+		f.pos = sf::Vector2f(m_deque.back().pos.x - 101.f, 0.f);
+		f.rect.setPosition(f.pos);
+		m_deque.push_back(f);
+	}
+
 	UIHelper::pushDequeFront = false;
-	UIHelper::Frame f;
-	f.rect.setSize(sf::Vector2f(100.f, 70.f));
-	f.rect.setOrigin(f.rect.getSize() / 2.f);
-	f.rect.setOutlineColor(sf::Color::Black);
-	f.rect.setOutlineThickness(1.f);
-
-	if (m_deque.empty())
-	{
-		f.pos = sf::Vector2f(0.f, 0.f);
-	}
-	else
-	{
-		f.pos = sf::Vector2f(m_deque.front().pos.x + 100.f, 0.f);
-	}
-
-	f.rect.setPosition(f.pos);
-	f.data = UIHelper::tmpData;
-
-	m_deque.push_front(f);
-	UIHelper::tmpData = "NULL";
-}
-
-void DequeManager::push_back()
-{
 	UIHelper::pushDequeBack = false;
-	UIHelper::Frame f;
-	f.rect.setSize(sf::Vector2f(100.f, 70.f));
-	f.rect.setOrigin(f.rect.getSize() / 2.f);
-	f.rect.setOutlineColor(sf::Color::Black);
-	f.rect.setOutlineThickness(1.f);
+}
 
-	if (m_deque.empty())
+void DequeManager::peek()
+{
+	if (UIHelper::peekDequeFront)
 	{
-		f.pos = sf::Vector2f(0.f, 0.f);
+		UIHelper::peekDequeFront = false;
+		UIHelper::tmpData = m_deque.empty() ? "NULL" : m_deque.front().data;
+		UIHelper::showDequePeekFront = true;
 	}
 	else
 	{
-		f.pos = sf::Vector2f(m_deque.back().pos.x - 100.f, 0.f);
+		UIHelper::peekDequeBack = false;
+		UIHelper::tmpData = m_deque.empty() ? "NULL" : m_deque.back().data;
+		UIHelper::showDequePeekBack = true;
 	}
-
-	f.rect.setPosition(f.pos);
-	f.data = UIHelper::tmpData;
-
-	m_deque.push_back(f);
-	UIHelper::tmpData = "NULL";
 }
 
-void DequeManager::pop_front()
+void DequeManager::pop()
 {
-	UIHelper::popDequeFront = false;
-	if (!m_deque.empty())
+	if (UIHelper::popDequeFront)
 	{
-		m_deque.pop_front();
+		UIHelper::popDequeFront = false;
+		if (!m_deque.empty())
+		{
+			m_deque.pop_front();
+		}
 	}
-}
-
-void DequeManager::pop_back()
-{
-	UIHelper::popDequeBack = false;
-	if (!m_deque.empty())
+	else
 	{
-		m_deque.pop_back();
+		UIHelper::popDequeBack = false;
+		if (!m_deque.empty())
+		{
+			m_deque.pop_back();
+		}
 	}
-}
-
-void DequeManager::peek_front()
-{
-	UIHelper::peekDequeFront = false;
-	UIHelper::tmpData = m_deque.empty() ? "NULL" : m_deque.front().data;
-	UIHelper::showDequePeekFront = true;
-}
-
-void DequeManager::peek_back()
-{
-	UIHelper::peekDequeBack = false;
-	UIHelper::tmpData = m_deque.empty() ? "NULL" : m_deque.back().data;
-	UIHelper::showDequePeekBack = true;
 }
