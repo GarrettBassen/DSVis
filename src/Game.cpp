@@ -60,23 +60,7 @@ void Game::update()
 	m_window.setView(m_view);
 	m_GUI.update(m_window);
 	
-	if (UITriggers::pushStackElement)
-	{
-		UITriggers::pushStackElement = false;
-		m_stack.push(UITriggers::tmpData);
-		UITriggers::tmpData = "NULL";
-	}
-	if (UITriggers::setStackPop) 
-	{
-		UITriggers::setStackPop = false;
-		m_stack.pop();
-	}
-	if (UITriggers::getStackPeek)
-	{
-		UITriggers::getStackPeek = false;
-		UITriggers::tmpData = m_stack.peek();
-		UITriggers::showStackPeek = true;
-	}
+	m_stack.update();
 
 	if (m_clock.getElapsedTime().asSeconds() >= 1.f / 60.f) 
 	{

@@ -1,7 +1,7 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 
-#include "StackGUI.h"
+#include "UITriggers.h"
 
 class StackManager {
 private:
@@ -16,8 +16,10 @@ private:
 
 public:
 	StackManager();
-	void push(const std::string& data);
-	void pop();
-	const std::string peek();
 	void render(sf::RenderWindow& window);
+	void update();
+
+	void push(const std::string& data);
+	void peek();
+	void pop();
 };

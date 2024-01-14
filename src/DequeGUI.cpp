@@ -18,32 +18,32 @@ void DequeGUI::menu()
 
 	if (ImGui::Button("Push Front", ImVec2(120.f, 25.f)) && m_data[0] != 0 && m_data[0] != 32)
 	{
-		// TODO
+		UITriggers::pushDequeFront = true;
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("Push Back", ImVec2(120.f, 25.f)) && m_data[0] != 0 && m_data[0] != 32)
 	{
-		// TODO
+		UITriggers::pushDequeBack = true;
 	}
 
 	if (ImGui::Button("Pop Front", ImVec2(120.f, 25.f)))
 	{
-		// TODO 
+		UITriggers::popDequeFront = true;
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("Pop Back", ImVec2(120.f, 25.f)))
 	{
-		// TODO
+		UITriggers::popDequeBack = true;
 	}
 
 	if (ImGui::Button("Peek Front", ImVec2(120.f, 25.f)))
 	{
-		// TODO 
+		UITriggers::peekDequeFront = true;
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("Peek Back", ImVec2(120.f, 25.f)))
 	{
-		// TODO
+		UITriggers::peekDequeBack = true;
 	}
 
 	ImGui::End();

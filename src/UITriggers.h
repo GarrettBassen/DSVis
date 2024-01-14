@@ -7,9 +7,9 @@ namespace UITriggers
 	extern bool showStack;
 	extern bool showStackPeek;
 
-	extern bool setStackPop;
-	extern bool getStackPeek;
-	extern bool pushStackElement;
+	extern bool popStack;
+	extern bool peekStack;
+	extern bool pushStack;
 
 
 	// Deque Variables
@@ -17,10 +17,12 @@ namespace UITriggers
 	extern bool showDequePeekFront;
 	extern bool showDequePeekBack;
 
-	extern bool setDequePopFront;
-	extern bool setDequePopBack;
-	extern bool getDequePeekFront;
-	extern bool getDequePeekBack;
+	extern bool popDequeFront;
+	extern bool popDequeBack;
+	extern bool peekDequeFront;
+	extern bool peekDequeBack;
+	extern bool pushDequeFront;
+	extern bool pushDequeBack;
 
 
 	// Misc Variables

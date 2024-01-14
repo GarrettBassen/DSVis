@@ -14,7 +14,7 @@ void StackGUI::menu()
 
 	if (ImGui::Button("Push", ImVec2(120.f, 25.f)) && m_data[0] != 0 && m_data[0] != 32)
 	{
-		UITriggers::pushStackElement = true;
+		UITriggers::pushStack = true;
 		UITriggers::tmpData = m_data;
 	}
 	ImGui::SameLine();
@@ -22,9 +22,9 @@ void StackGUI::menu()
 	ImGui::InputTextWithHint(" ", "Node Data", m_data, sizeof(m_data));
 	ImGui::PopItemWidth();
 
-	if (ImGui::Button("Pop", ImVec2(120.f, 25.f))) { UITriggers::setStackPop = true; }
+	if (ImGui::Button("Pop", ImVec2(120.f, 25.f))) { UITriggers::popStack = true; }
 	ImGui::SameLine();
-	if (ImGui::Button("Peek", ImVec2(120.f, 25.f))) { UITriggers::getStackPeek = true; }
+	if (ImGui::Button("Peek", ImVec2(120.f, 25.f))) { UITriggers::peekStack = true; }
 
 	ImGui::End();
 }

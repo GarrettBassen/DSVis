@@ -10,6 +10,27 @@ StackManager::StackManager()
 	m_text.setCharacterSize(18.f);
 }
 
+void StackManager::update()
+{
+	if (UITriggers::pushStack)
+	{
+		UITriggers::pushStack = false;
+		push(UITriggers::tmpData);
+		UITriggers::tmpData = "NULL";
+	}
+	if (UITriggers::popStack)
+	{
+		UITriggers::popStack = false;
+		pop();
+	}
+	if (UITriggers::peekStack)
+	{
+		UITriggers::peekStack = false;
+		peek();
+		UITriggers::showStackPeek = true;
+	}
+}
+
 void StackManager::push(const std::string& data) 
 {
 	Frame f;
@@ -26,12 +47,14 @@ void StackManager::push(const std::string& data)
 void StackManager::pop() 
 {
 	if (!m_stack.empty())
+	{
 		m_stack.pop_back();
+	}
 }
 
-const std::string StackManager::peek()
+void StackManager::peek()
 {
-	return m_stack.empty() ? "NULL" : m_stack.back().data;
+	UITriggers::tmpData = m_stack.empty() ? "NULL" : m_stack.back().data;
 }
 
 void StackManager::render(sf::RenderWindow& window) 
