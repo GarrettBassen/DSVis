@@ -48,7 +48,7 @@
     <ClCompile Include="src\StackGUI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\UITriggers.cpp">
+    <ClCompile Include="src\UIHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\DequeGUI.cpp">
@@ -398,7 +398,7 @@
     <ClInclude Include="src\StackGUI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\UITriggers.h">
+    <ClInclude Include="src\UIHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\DequeGUI.h">

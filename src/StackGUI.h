@@ -3,7 +3,7 @@
 #include "imgui-SFML.h"
 #include <string>
 
-#include "UITriggers.h"
+#include "UIHelper.h"
 
 class StackGUI {
 private:

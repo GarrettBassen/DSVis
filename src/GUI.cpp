@@ -29,13 +29,29 @@ void GUI::update(sf::RenderWindow& window)
 
 void GUI::render(sf::RenderWindow& window)
 {
-	//ImGui::ShowDemoWindow();
-	if (UITriggers::showStack)		{ m_stackGUI.menu(); }
-	else if (UITriggers::showDeque) { m_dequeGUI.menu(); }
-	else							{ this->menu(); }
+	// Standard menus
+	if (UIHelper::showStack)		
+	{ 
+		m_stackGUI.menu();
+	}
+	else if (UIHelper::showDeque)
+	{ 
+		m_dequeGUI.menu(); 
+	}
+	else							
+	{ 
+		this->menu(); 
+	}
 	
-	if (UITriggers::showStackPeek)												{ m_stackGUI.popup(); }
-	else if (UITriggers::showDequePeekBack || UITriggers::showDequePeekFront)	{ m_dequeGUI.popup(); }
+	// Popup menus
+	if (UIHelper::showStackPeek)											
+	{ 
+		m_stackGUI.popup(); 
+	}
+	else if (UIHelper::showDequePeekBack || UIHelper::showDequePeekFront)	
+	{ 
+		m_dequeGUI.popup(); 
+	}
 }
 
 void GUI::menu() 
@@ -44,9 +60,9 @@ void GUI::menu()
 	ImGui::Begin("Control Panel", NULL, m_Flags);
 	about_bar();
 
-	if (ImGui::Button(("Stack"), ImVec2(120.f, 25.f))) { UITriggers::showStack = true; }
+	if (ImGui::Button(("Stack"), ImVec2(120.f, 25.f))) { UIHelper::showStack = true; }
 	ImGui::SameLine();
-	if (ImGui::Button(("Deque"), ImVec2(120.f, 25.f))) { UITriggers::showDeque = true; }
+	if (ImGui::Button(("Deque"), ImVec2(120.f, 25.f))) { UIHelper::showDeque = true; }
 	
 	if (ImGui::Button(("TODO"), ImVec2(120.f, 25.f))) {}
 	ImGui::SameLine();

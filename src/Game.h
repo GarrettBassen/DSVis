@@ -3,6 +3,7 @@
 
 #include "GUI.h"
 #include "StackManager.h"
+#include "DequeManager.h"
 
 class Game {
 private:
@@ -16,6 +17,7 @@ private:
 	float m_zoom;
 
 	StackManager m_stack;
+	DequeManager m_deque;
 	GUI m_GUI;
 
 public:

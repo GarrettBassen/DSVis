@@ -1,8 +1,17 @@
 #pragma once
+#include "SFML/Graphics.hpp"
 #include <string>
 
-namespace UITriggers 
+namespace UIHelper
 {
+	// For Stack and Deque
+	struct Frame {
+		std::string data;
+		sf::Vector2f pos;
+		sf::RectangleShape rect;
+	};
+
+
 	// Stack Variables
 	extern bool showStack;
 	extern bool showStackPeek;

@@ -6,7 +6,7 @@
 #include <string>
 #include <memory>
 
-#include "UITriggers.h"
+#include "UIHelper.h"
 #include "StackGUI.h"
 #include "DequeGUI.h"
 

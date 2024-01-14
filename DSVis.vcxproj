@@ -158,7 +158,7 @@
     <ClCompile Include="src\DequeManager.cpp" />
     <ClCompile Include="src\StackGUI.cpp" />
     <ClCompile Include="src\StackManager.cpp" />
-    <ClCompile Include="src\UITriggers.cpp" />
+    <ClCompile Include="src\UIHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="libraries\imgui\imconfig-SFML.h" />
@@ -276,7 +276,7 @@
     <ClInclude Include="src\DequeManager.h" />
     <ClInclude Include="src\StackGUI.h" />
     <ClInclude Include="src\StackManager.h" />
-    <ClInclude Include="src\UITriggers.h" />
+    <ClInclude Include="src\UIHelper.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\icon.png" />

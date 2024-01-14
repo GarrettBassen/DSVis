@@ -10,42 +10,43 @@ StackManager::StackManager()
 	m_text.setCharacterSize(18.f);
 }
 
-void StackManager::update()
+void StackManager::render(sf::RenderWindow& window)
 {
-	if (UITriggers::pushStack)
+	for (UIHelper::Frame f : m_stack)
 	{
-		UITriggers::pushStack = false;
-		push(UITriggers::tmpData);
-		UITriggers::tmpData = "NULL";
-	}
-	if (UITriggers::popStack)
-	{
-		UITriggers::popStack = false;
-		pop();
-	}
-	if (UITriggers::peekStack)
-	{
-		UITriggers::peekStack = false;
-		peek();
-		UITriggers::showStackPeek = true;
+		m_text.setString(f.data);
+		m_text.setPosition(f.rect.getPosition().x - 4.f - (f.data.size() * m_text.getCharacterSize()) / 4.f, f.rect.getPosition().y - m_text.getCharacterSize() / 2.f);
+
+		window.draw(f.rect);
+		window.draw(m_text);
 	}
 }
 
-void StackManager::push(const std::string& data) 
+void StackManager::update()
 {
-	Frame f;
+	if (UIHelper::pushStack) { push(); }
+	if (UIHelper::peekStack) { peek(); }
+	if (UIHelper::popStack)	 { pop();  }
+}
+
+void StackManager::push() 
+{
+	UIHelper::pushStack = false;
+	UIHelper::Frame f;
 	f.rect.setSize(sf::Vector2f(100.f, 70.f));
 	f.rect.setOrigin(f.rect.getSize() / 2.f);
 	f.rect.setOutlineColor(sf::Color::Black);
 	f.rect.setOutlineThickness(1.f);
 	f.rect.setPosition(sf::Vector2f(0.f, m_stack.size() * -70.f - m_stack.size()));
-	f.data = data;
+	f.data = UIHelper::tmpData;
 
 	m_stack.push_back(f);
+	UIHelper::tmpData = "NULL";
 }
 
 void StackManager::pop() 
 {
+	UIHelper::popStack = false;
 	if (!m_stack.empty())
 	{
 		m_stack.pop_back();
@@ -54,17 +55,7 @@ void StackManager::pop()
 
 void StackManager::peek()
 {
-	UITriggers::tmpData = m_stack.empty() ? "NULL" : m_stack.back().data;
-}
-
-void StackManager::render(sf::RenderWindow& window) 
-{
-	for (Frame f : m_stack)
-	{
-		m_text.setString(f.data);
-		m_text.setPosition(f.rect.getPosition().x - 4.f - (f.data.size() * m_text.getCharacterSize()) / 4.f, f.rect.getPosition().y - m_text.getCharacterSize() / 2.f);
-
-		window.draw(f.rect);
-		window.draw(m_text);
-	}
+	UIHelper::peekStack = false;
+	UIHelper::tmpData = m_stack.empty() ? "NULL" : m_stack.back().data;
+	UIHelper::showStackPeek = true;
 }

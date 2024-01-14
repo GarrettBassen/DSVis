@@ -10,7 +10,7 @@ DequeGUI::DequeGUI()
 void DequeGUI::menu()
 {
 	ImGui::SetNextWindowSize(ImVec2(265.f, 159.f));
-	ImGui::Begin("Deque Panel", &UITriggers::showDeque, m_flags);
+	ImGui::Begin("Deque Panel", &UIHelper::showDeque, m_flags);
 
 	ImGui::PushItemWidth(250.f);
 	ImGui::InputTextWithHint(" ", "Node Data", m_data, sizeof(m_data));
@@ -18,32 +18,34 @@ void DequeGUI::menu()
 
 	if (ImGui::Button("Push Front", ImVec2(120.f, 25.f)) && m_data[0] != 0 && m_data[0] != 32)
 	{
-		UITriggers::pushDequeFront = true;
+		UIHelper::tmpData = m_data;
+		UIHelper::pushDequeFront = true;
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("Push Back", ImVec2(120.f, 25.f)) && m_data[0] != 0 && m_data[0] != 32)
 	{
-		UITriggers::pushDequeBack = true;
+		UIHelper::tmpData = m_data;
+		UIHelper::pushDequeBack = true;
 	}
 
 	if (ImGui::Button("Pop Front", ImVec2(120.f, 25.f)))
 	{
-		UITriggers::popDequeFront = true;
+		UIHelper::popDequeFront = true;
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("Pop Back", ImVec2(120.f, 25.f)))
 	{
-		UITriggers::popDequeBack = true;
+		UIHelper::popDequeBack = true;
 	}
 
 	if (ImGui::Button("Peek Front", ImVec2(120.f, 25.f)))
 	{
-		UITriggers::peekDequeFront = true;
+		UIHelper::peekDequeFront = true;
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("Peek Back", ImVec2(120.f, 25.f)))
 	{
-		UITriggers::peekDequeBack = true;
+		UIHelper::peekDequeBack = true;
 	}
 
 	ImGui::End();
@@ -57,21 +59,21 @@ void DequeGUI::popup()
 	ImGui::OpenPopup("Deque Peek");
 	if (ImGui::BeginPopupModal("Deque Peek", NULL, ImGuiWindowFlags_AlwaysAutoResize))
 	{
-		if (UITriggers::showDequePeekFront)
+		if (UIHelper::showDequePeekFront)
 		{
-			ImGui::Text("The front of the deque is: %s", UITriggers::tmpData.c_str());
+			ImGui::Text("The front of the deque is: %s", UIHelper::tmpData.c_str());
 		}
-		else if (UITriggers::showDequePeekBack)
+		else if (UIHelper::showDequePeekBack)
 		{
-			ImGui::Text("The back of the deque is: %s", UITriggers::tmpData.c_str());
+			ImGui::Text("The back of the deque is: %s", UIHelper::tmpData.c_str());
 		}
 		ImGui::Separator();
 
 		if (ImGui::Button("OK", ImVec2(190, 0)))
 		{
-			UITriggers::showDequePeekBack = false;
-			UITriggers::showDequePeekFront = false;
-			UITriggers::tmpData = "NULL";
+			UIHelper::showDequePeekBack = false;
+			UIHelper::showDequePeekFront = false;
+			UIHelper::tmpData = "NULL";
 		}
 
 		ImGui::EndPopup();

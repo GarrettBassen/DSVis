@@ -1,7 +1,6 @@
 #include <string>
 
 #include "Game.h"
-#include "UITriggers.h"
 
 Game::Game()
 	: m_window(sf::VideoMode(1500, 900), "DSV | Data Structure Visualization Tool | By: Garrett Bassen", sf::Style::Default, sf::ContextSettings(0, 0, 8))
@@ -11,6 +10,7 @@ Game::Game()
 	, m_GUI(m_window)
 	, m_zoom(1.f)
 	, m_stack()
+	, m_deque()
 {
 	sf::Image image;
 	image.loadFromFile("assets/icon.png");
@@ -61,6 +61,7 @@ void Game::update()
 	m_GUI.update(m_window);
 	
 	m_stack.update();
+	m_deque.update();
 
 	if (m_clock.getElapsedTime().asSeconds() >= 1.f / 60.f) 
 	{
@@ -78,6 +79,7 @@ void Game::render()
 	m_window.clear(sf::Color(185, 172, 154, 240));
 
 	m_stack.render(m_window);
+	m_deque.render(m_window);
 	m_GUI.render(m_window);
 
 	ImGui::SFML::Render(m_window);

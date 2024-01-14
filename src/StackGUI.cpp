@@ -10,21 +10,21 @@ StackGUI::StackGUI()
 void StackGUI::menu()
 {
 	ImGui::SetNextWindowSize(ImVec2(265.f, 98.f));
-	ImGui::Begin("Stack Panel", &UITriggers::showStack, m_Flags);
+	ImGui::Begin("Stack Panel", &UIHelper::showStack, m_Flags);
 
 	if (ImGui::Button("Push", ImVec2(120.f, 25.f)) && m_data[0] != 0 && m_data[0] != 32)
 	{
-		UITriggers::pushStack = true;
-		UITriggers::tmpData = m_data;
+		UIHelper::tmpData = m_data;
+		UIHelper::pushStack = true;
 	}
 	ImGui::SameLine();
 	ImGui::PushItemWidth(120.f);
 	ImGui::InputTextWithHint(" ", "Node Data", m_data, sizeof(m_data));
 	ImGui::PopItemWidth();
 
-	if (ImGui::Button("Pop", ImVec2(120.f, 25.f))) { UITriggers::popStack = true; }
+	if (ImGui::Button("Pop", ImVec2(120.f, 25.f))) { UIHelper::popStack = true; }
 	ImGui::SameLine();
-	if (ImGui::Button("Peek", ImVec2(120.f, 25.f))) { UITriggers::peekStack = true; }
+	if (ImGui::Button("Peek", ImVec2(120.f, 25.f))) { UIHelper::peekStack = true; }
 
 	ImGui::End();
 }
@@ -37,13 +37,13 @@ void StackGUI::popup()
 	ImGui::OpenPopup("Peek Info");
 	if (ImGui::BeginPopupModal("Peek Info", NULL, ImGuiWindowFlags_AlwaysAutoResize))
 	{
-		ImGui::Text("The top of the stack is: %s", UITriggers::tmpData.c_str());
+		ImGui::Text("The top of the stack is: %s", UIHelper::tmpData.c_str());
 		ImGui::Separator();
 
 		if (ImGui::Button("OK", ImVec2(190, 0))) 
 		{ 
-			UITriggers::showStackPeek = false; 
-			UITriggers::tmpData = "NULL";
+			UIHelper::showStackPeek = false;
+			UIHelper::tmpData = "NULL";
 		}
 
 		ImGui::EndPopup();
