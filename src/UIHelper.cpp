@@ -22,5 +22,13 @@ bool UIHelper::pushDequeFront = false;
 bool UIHelper::pushDequeBack = false;
 
 
+// Tree Variables
+bool UIHelper::showTree = false;;
+bool UIHelper::insertTree = false;;
+bool UIHelper::removeTree = false;;
+bool UIHelper::rotateTreeLeft = false;;
+bool UIHelper::rotateTreeRight = false;
+
+
 // Used to transfer data across classes
 std::string UIHelper::tmpData = "";

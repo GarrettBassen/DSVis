@@ -38,6 +38,10 @@ void GUI::render(sf::RenderWindow& window)
 	{ 
 		m_dequeGUI.menu(); 
 	}
+	else if (UIHelper::showTree)
+	{
+		m_treeGUI.menu();
+	}
 	else							
 	{ 
 		this->menu(); 
@@ -64,7 +68,7 @@ void GUI::menu()
 	ImGui::SameLine();
 	if (ImGui::Button(("Deque"), ImVec2(120.f, 25.f))) { UIHelper::showDeque = true; }
 	
-	if (ImGui::Button(("TODO"), ImVec2(120.f, 25.f))) {}
+	if (ImGui::Button(("Tree"), ImVec2(120.f, 25.f)))  { UIHelper::showTree = true;  }
 	ImGui::SameLine();
 	if (ImGui::Button(("TODO"), ImVec2(120.f, 25.f))) {}
 

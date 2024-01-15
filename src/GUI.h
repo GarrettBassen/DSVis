@@ -9,6 +9,7 @@
 #include "UIHelper.h"
 #include "StackGUI.h"
 #include "DequeGUI.h"
+#include "TreeGUI.h"
 
 class GUI {
 private:
@@ -16,6 +17,7 @@ private:
 	static sf::Clock m_Clock;
 	StackGUI m_stackGUI;
 	DequeGUI m_dequeGUI;
+	TreeGUI  m_treeGUI;
 
 public:
 	GUI(sf::RenderWindow& window);

@@ -12,6 +12,14 @@ namespace UIHelper
 	};
 
 
+	// For Tree
+	struct Node {
+		std::string data;
+		sf::Vector2f pos;
+		sf::CircleShape circle;
+	};
+
+
 	// Stack Variables
 	extern bool showStack;
 	extern bool showStackPeek;
@@ -32,6 +40,14 @@ namespace UIHelper
 	extern bool peekDequeBack;
 	extern bool pushDequeFront;
 	extern bool pushDequeBack;
+
+
+	// Tree Variables
+	extern bool showTree;
+	extern bool insertTree;
+	extern bool removeTree;
+	extern bool rotateTreeLeft;
+	extern bool rotateTreeRight;
 
 
 	// Misc Variables
