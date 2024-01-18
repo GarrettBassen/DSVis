@@ -62,6 +62,7 @@ void Game::update()
 	
 	m_stack.update();
 	m_deque.update();
+	m_tree.update();
 
 	if (m_clock.getElapsedTime().asSeconds() >= 1.f / 60.f) 
 	{
@@ -80,6 +81,7 @@ void Game::render()
 
 	m_stack.render(m_window);
 	m_deque.render(m_window);
+	m_tree.render(m_window);
 	m_GUI.render(m_window);
 
 	ImGui::SFML::Render(m_window);

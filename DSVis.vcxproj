@@ -159,6 +159,7 @@
     <ClCompile Include="src\StackGUI.cpp" />
     <ClCompile Include="src\StackManager.cpp" />
     <ClCompile Include="src\TreeGUI.cpp" />
+    <ClCompile Include="src\TreeManager.cpp" />
     <ClCompile Include="src\UIHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -278,6 +279,7 @@
     <ClInclude Include="src\StackGUI.h" />
     <ClInclude Include="src\StackManager.h" />
     <ClInclude Include="src\TreeGUI.h" />
+    <ClInclude Include="src\TreeManager.h" />
     <ClInclude Include="src\UIHelper.h" />
   </ItemGroup>
   <ItemGroup>

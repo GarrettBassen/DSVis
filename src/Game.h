@@ -4,6 +4,7 @@
 #include "GUI.h"
 #include "StackManager.h"
 #include "DequeManager.h"
+#include "TreeManager.h"
 
 class Game {
 private:
@@ -18,6 +19,7 @@ private:
 
 	StackManager m_stack;
 	DequeManager m_deque;
+	TreeManager m_tree;
 	GUI m_GUI;
 
 public:

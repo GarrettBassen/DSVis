@@ -16,13 +16,13 @@ void TreeGUI::menu()
 	ImGui::InputTextWithHint(" ", "Node Data", m_data, sizeof(m_data));
 	ImGui::PopItemWidth();
 
-	if (ImGui::Button("Remove", ImVec2(120.f, 25.f)) && m_data[0] != 0 && m_data[0] != 32)
+	if (ImGui::Button("Insert", ImVec2(120.f, 25.f)) && m_data[0] != 0 && m_data[0] != 32)
 	{
 		UIHelper::tmpData = m_data;
 		UIHelper::insertTree = true;
 	}
 	ImGui::SameLine();
-	if (ImGui::Button("Insert", ImVec2(120.f, 25.f)) && m_data[0] != 0 && m_data[0] != 32)
+	if (ImGui::Button("Remove", ImVec2(120.f, 25.f)) && m_data[0] != 0 && m_data[0] != 32)
 	{
 		UIHelper::tmpData = m_data;
 		UIHelper::removeTree = true;
